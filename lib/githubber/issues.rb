@@ -2,7 +2,7 @@
 module Githubber
 	class Issues
 		include HTTParty
-		base_url "https://api.github.com"
+		base_uri "https://api.github.com"
 
 		def initialize(auth_token)
 			@auth = {
