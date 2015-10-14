@@ -22,6 +22,14 @@ module Githubber
 		def close_issue(owner, repo, issue_num)
 			Issues.patch("repos/#{owner}/#{repo}/issues/#{issue_num}", :headers => @auth, :body => {"state" => "closed"}.to_json)
 		end
+
+		def create_issue(owner, repo, title, body, assignee)
+			#POST /repos/:owner/:repo/issues
+			Issues.post("repos/#{owner}/#{repo}/issues", :headers => @auth, :body => { "title" => title, 
+																						"body" => body, 
+																						"assignee" => assignee }.to_json)
+		end
+		
 	end
 end
 
