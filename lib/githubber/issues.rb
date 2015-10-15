@@ -12,16 +12,24 @@ module Githubber
 		end
 
 		def comment(owner, repo, issue_num, comment)
-			PullRequests.patch("repos/#{owner}/#{repo}/issues/#{issue_num}", :headers => @auth, :body => { "body" => comment }.to_json)
+			Issues.post("repos/#{owner}/#{repo}/issues/#{issue_num}", :headers => @auth, :body => { "body" => comment }.to_json)
 		end
 
 		def list_issues(owner, repo)
-			PullRequests.get("repos/#{owner}/#{repo}/issues", :headers => @auth)
+			Issues.get("repos/#{owner}/#{repo}/issues", :headers => @auth)
 		end
 
 		def close_issue(owner, repo, issue_num)
-			PullRequests.patch("repos/#{owner}/#{repo}/issues/#{issue_num}", :headers => @auth, :body => {"state" => "closed"}.to_json)
+			Issues.patch("repos/#{owner}/#{repo}/issues/#{issue_num}", :headers => @auth, :body => {"state" => "closed"}.to_json)
 		end
+
+		def create_issue(owner, repo, title, body, assignee)
+			#POST /repos/:owner/:repo/issues
+			Issues.post("repos/#{owner}/#{repo}/issues", :headers => @auth, :body => { "title" => title, 
+																						"body" => body, 
+																						"assignee" => assignee }.to_json)
+		end
+		
 	end
 end
 
